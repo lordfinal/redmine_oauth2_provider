@@ -1,0 +1,21 @@
+<fieldset class="has_collapsed project ui-droppable">
+  <div class="tools" style="top: 10px; height: 65px;">
+    <div class="delete_project">
+      <%= link_to '<i class="icon icon-remove"></i>'.html_safe,{:controller => 'oauth2', :action => 'client', :id =>@client}, :method => 'delete', :data => {:confirm => l(:remove_this_oauth2_application)}%>
+    </div>
+  </div>
+  <legend>
+    <div><%= l(:label_oauth2_client_application)%>: <%= @client.name %></div>
+  </legend>
+  <%if params[:action] != 'client'%>
+    <%= link_to({:controller => 'oauth2', :action => 'client', :id =>@client}, :class => 'link_to_project', :style => '') do %>    
+      <%= oauth2_client_information %>
+    <%end%>
+  <%else%>
+      <%= oauth2_client_information %>
+  <%end%>
+</fieldset>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'project' %>
+<%end%>

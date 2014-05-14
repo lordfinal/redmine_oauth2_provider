@@ -1,0 +1,40 @@
+<%= form_tag(oauth2_allow_client_path, :method=>:post) do %>
+  <fieldset>
+    <legend>Authorize OAuth client</legend>
+    <div style="padding: 5px;border:dashed 1px #C2C2C2; -moz-border-radius:16px; -webkit-border-radius:16px; border-radius:16px; padding-top: 10px;">
+        <%= l(:label_oauth2_application)%>
+        <b style="padding: 5px;border:solid 1px #C2C2C2; -moz-border-radius:16px; -webkit-border-radius:16px; border-radius:16px; top: 4px; position: relative;" class="icon">
+          <%= @oauth2.client.name unless @oauth2.client.nil? %>
+        </b> 
+        <%="#{l(:label_oauth2_want_permissions)} :" %>
+        <ul>
+          <% @oauth2.scopes.each do |scope| %>
+            <% next unless Setting.plugin_redmine_oauth2_provider['permissions'][scope.to_sym] %>
+            <li class="icon icon-ok"><%= Setting.plugin_redmine_oauth2_provider['permissions'][scope.to_sym] %></li>
+          <% end %>
+        </ul>
+          <hr style="position: relative;" />
+          <%="#{l(:label_oauth2_can_not_get_permissons)} :"%>
+        <ul>
+          <% @oauth2.unauthorized_scopes.each do |scope| %>
+            <% next unless Setting.plugin_redmine_oauth2_provider['permissions'][scope.to_sym] %>
+            <li class="icon icon-remove"><%= Setting.plugin_redmine_oauth2_provider['permissions'][scope.to_sym] %></li>
+          <% end %>
+        </ul>
+    </div>
+
+    <p>
+    <% @oauth2.params.each do |key, value| %>
+      <input type="hidden" name="<%= key %>" value="<%= value %>">
+    <% end %>
+    <input type="hidden" name="user_id" value="<%= User.current.id %>">
+    </p>
+    <p>
+      <input type="checkbox" name="allow" id="allow" value="1">
+      <label for="allow"><%=l(:label_oauth2_allow_application)%></label>
+    </p>
+    <p>
+      <input type="submit" value="Go!">
+    </p>
+  </fieldset>
+<%end%>

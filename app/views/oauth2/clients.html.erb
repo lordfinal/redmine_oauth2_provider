@@ -1,0 +1,11 @@
+<%@clients.each do |client| %>
+  <%= render :partial =>'client',:locals => {:@client => client, :@client_secret => client.client_secret} %>
+<%end%>
+
+<% content_for :sidebar_right do %>
+    <ul>
+     <li><%= link_to "#{l(:label_oauth2_all_applications)}".html_safe,{:controller => 'oauth2', :action => 'clients'}, :class => 'icon icon-globe', :method => 'get' %></li>
+     <li><%= link_to "#{l(:label_oauth2_register_new_application)}".html_safe,{:controller => 'oauth2', :action => 'register_app'}, :class => 'icon icon-plus-sign', :method => 'get' %></li>
+     <li><%= link_to_function l(:button_back), 'history.back(); return false',:class => 'icon icon-time' %></li>
+    </ul>
+<% end %>

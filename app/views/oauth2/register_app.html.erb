@@ -1,0 +1,21 @@
+<%= form_tag({:controller => 'oauth2', :action => 'create_app'}, :method => :post) do %>
+  <fieldset>
+    <legend><%= l(:label_oauth2_register_application)%></legend>
+    <p>
+    <label style="width: 100px;" for="name"><%= l(:label_oauth2_application_name)%>:</label>
+    <input style="width: 260px;" type="text" name="name" id="name">
+    </p>
+    <p>
+    <label style="width: 100px;" for="redirect_uri"><%= l(:label_oauth2_request_url)%>: </label>
+    <input style="width: 260px;" type="text" name="redirect_uri" id="redirect_uri">
+    </p>
+    <input type="submit" value="Register">
+  </fieldset>
+<%end%>
+
+<% content_for :sidebar_right do %>
+    <ul>
+     <li><%= link_to "#{l(:label_oauth2_all_applications)}".html_safe,{:controller => 'oauth2', :action => 'clients'}, :class => 'icon icon-globe', :method => 'get' %></li>
+     <li><%= link_to_function l(:button_back), 'history.back(); return false',:class => 'icon icon-time' %></li>
+    </ul>
+<%end%>
